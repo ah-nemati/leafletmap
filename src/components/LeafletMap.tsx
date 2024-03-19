@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman";
+import { Context } from "../App";
 
 const LeafletMap = () => {
-  const [geoJson, setGeoJson] = useState([]);
+  const { geoJson, setGeoJson } = useContext(Context);
+  console.log(geoJson);
 
   useEffect(() => {
     const map = L.map("leafletmap").setView(
@@ -13,7 +15,6 @@ const LeafletMap = () => {
       13
     );
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-
     map.pm.addControls({
       drawControls: true,
       editControls: true,
@@ -42,9 +43,14 @@ const LeafletMap = () => {
       map.remove();
       map.removeLayer(geoJsonLayer);
     };
-  }, []);
+  }, [geoJson]);
 
-  return <div className="w-1/2 h-full" id="leafletmap"></div>;
+  return (
+    <div
+      className="w-1/2 h-full border-[16px] rounded-md border-gray-100"
+      id="leafletmap"
+    ></div>
+  );
 };
 
 export default LeafletMap;
