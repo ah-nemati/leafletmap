@@ -41,7 +41,7 @@ const GeojsonInput = () => {
       onDragOver={(event: DragEvent) => event.preventDefault()}
     >
       <button
-        className="outline-none p-2 md:w-1/5 w-full rounded-md bg-green-400 text-white"
+        className="outline-none p-2 md:1/5 xl:w-1/3 w-full rounded-md bg-green-400 text-white"
         onClick={dowloadGeoJsonFile}
       >
         Export geoJson
