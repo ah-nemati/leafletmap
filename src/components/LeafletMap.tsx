@@ -8,7 +8,7 @@ import { Context } from "../App";
 const LeafletMap = () => {
   const { geoJson, setGeoJson } = useContext(Context);
   const mapRef = useRef<L.Map | null>(null);
-  const [isShapeAdded, setisShapeAdded] = useState(false);
+  const [isShapedAdd, setIsShapedAdd] = useState(false)
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -24,10 +24,10 @@ const LeafletMap = () => {
       });
 
       map.on("pm:create", (e) => {
-        if (!isShapeAdded) {
-          //@ts-ignore
-          setGeoJson([...map.pm.getGeomanLayers(true).toGeoJSON().features]);
-          setisShapeAdded(true);
+        if (!isShapedAdd) {
+            //@ts-ignore
+            setGeoJson([...map.pm.getGeomanLayers(true).toGeoJSON().features]);
+            setIsShapedAdd(true)
         }
         e.layer.on("pm:edit", () => {
           //@ts-ignore
@@ -38,7 +38,6 @@ const LeafletMap = () => {
       map.on("pm:remove", () => {
         //@ts-ignore
         setGeoJson([...map.pm.getGeomanLayers(true).toGeoJSON().features]);
-        setisShapeAdded(false);
       });
 
       mapRef.current = map;
@@ -58,17 +57,11 @@ const LeafletMap = () => {
       return () => {
         if (mapRef.current && geoJsonLayer) {
           mapRef.current.removeLayer(geoJsonLayer);
-          setisShapeAdded(false);
         }
       };
     }
   }, [geoJson]);
 
-  useEffect(() => {
-    if (isShapeAdded) {
-      mapRef.current = null;
-    }
-  }, [isShapeAdded]);
 
   return (
     <div
